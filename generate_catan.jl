@@ -32,6 +32,18 @@ end
 
 # Generate a randomized Catan board.
 function generate_board()
+    function water() 
+        return "water"
+    end
+
+    function harbor(idx)
+        return "harbor(" * harbors[idx] * ")"
+    end
+
+    function resource(idx) 
+        return resources[idx] * "(" * values[idx] * ")"
+    end
+
     harbors = Random.shuffle(
         [
             "3:1", "3:1", "3:1", "3:1",
@@ -55,17 +67,6 @@ function generate_board()
     )
 
     values = generate_values(resources)
-
-    function water() 
-        return "water"
-    end
-    function harbor(idx)
-        return "harbor(" * harbors[idx] * ")"
-    end
-
-    function resource(idx) 
-        return resources[idx] * "(" * values[idx] * ")"
-    end
 
     return [
         water(),   harbor(1),    water(),      harbor(2),
