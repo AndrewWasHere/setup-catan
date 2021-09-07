@@ -1,7 +1,13 @@
+#
+# Copyright 2021, Andrew Lin.
+#
+# This software is licensed under the MIT License.
+# See LICENSE.txt at the root of the project or
+# https://opensource.org/licenses/MIT
+#
 module GenerateCatan
 import Random
-export generate_board
-export write_board
+export generate_board, print_board
 
 # Shuffle possible values, inserting a 0 at the desert location in `resources`.
 function generate_values(resources)
@@ -12,7 +18,7 @@ function generate_values(resources)
             "4",  "4",
             "5",  "5",
             "6",  "6",
-            "7",  "7",
+            # 7 belongs to the robber.
             "8",  "8",
             "9",  "9",
             "10", "10",
@@ -54,7 +60,7 @@ function generate_board()
         return "water"
     end
     function harbor(idx)
-        return "harbor(" * harbors[idx] *")"
+        return "harbor(" * harbors[idx] * ")"
     end
 
     function resource(idx) 
@@ -74,41 +80,16 @@ end
 
 # Print the generated Catan board.
 function print_board(board)
-    for idx in 1:4
-        print(board[idx])
-        print("  ")
+    row_length = [1, 4, 5, 6, 7, 6, 5, 4]
+    for row in 1:7
+        idx_start = sum(row_length[1:row])
+        idx_end = idx_start + row_length[row + 1] - 1
+        print("row " * string(row) * ": | ")
+        for idx in idx_start:idx_end
+            print(board[idx] * " | ")
+        end
+        println()
     end
-    print("\n")
-    for idx in 5:9
-        print(board[idx])
-        print("  ")
-    end
-    print("\n")
-    for idx in 10:15
-        print(board[idx])
-        print("  ")
-    end
-    print("\n")
-    for idx in 16:22
-        print(board[idx])
-        print("  ")
-    end
-    print("\n")
-    for idx in 23:28
-        print(board[idx])
-        print("  ")
-    end
-    print("\n")
-    for idx in 29:33
-        print(board[idx])
-        print("  ")
-    end
-    print("\n")
-    for idx in 34:37
-        print(board[idx])
-        print("  ")
-    end
-    print("\n")
 end
 
 end
